@@ -23,7 +23,7 @@
 			window.addEventListener('shake', function(){
 				var audio = new Audio("spo_ge_mbat01.mp3");
 				audio.play();
-				window.removeEventListener('shake', shakeEventDidOccur, false);
+				window.removeEventListener('shake', this, false);
 				myShakeEvent.stop();
 				btn.disabled=false;
 				//shakeEventDidOccur(btn);
@@ -38,7 +38,7 @@
 <div id="arrow"><img src="images/arrow.png" width="118" alt="" /></div>
 <div id="debug"></div>
 -->
-<div id="status">Are You Ready?</div>
+<div id="status">Are You Ready? Push Button!</div>
 <input id="pitchButton" type="button" value="Pepper Pitch!" onclick="startShakeChk(this)">
 </body>
 </html>
