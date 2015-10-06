@@ -17,10 +17,13 @@
 	audio[1] = new Audio("spo_ge_mbat02.mp3");
 	audio[2] = new Audio("spo_ge_mbat03.mp3");
 	audio[3] = new Audio("spo_ge_mbat_bant01.mp3");
+	var status = document.getElementById("status");
+	var result = document.getElementById("result");
 
 	function startShakeChk(btn){
 		btn.disabled=true;
 		myShakeEvent.start();
+		document.getElementById("result").style.display="none";
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
 		audio[0].load();
 		audio[1].load();
@@ -29,6 +32,8 @@
 		var res = new Array("ホオオム　ラーーン","ヒット","ツーベース","アウト");
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
+			document.getElementById("result").innerHTML="SWING!!";
+			document.getElementById("result").style.display="block";
 
 			window.addEventListener('shake', function(){
 				var rnd;
@@ -36,9 +41,9 @@
 				audio[rnd].play();
 				window.removeEventListener('shake', this, false);
 				myShakeEvent.stop();
-				document.getElementById("status").innerHTML=res[rnd];
+				document.getElementById("result").innerHTML=res[rnd];
 				window.setTimeout(function(){
-					document.getElementById("status").innerHTML="Are You Ready? Push Button!";
+					document.getElementById("status").innerHTML="Are You Ready?";
 					btn.disabled=false;
 				},2000);
 			}, false);
@@ -49,7 +54,8 @@
 </head>
 <body background="00361.JPG" style="text-align:center">
 	<img src="images-2.jpeg">
-<div id="status" style="font-size:32px;">Are You Ready? Push Button!</div>
-<a style="display:block;background-color:red;color:white;font-size:32px;" id="pitchButton" href="javascript:startShakeChk(this)" onclick="startShakeChk(this)">Pepper Pitch!</a>
+<div id="status" style="font-size:32px;">Are You Ready?</div>
+<a style="display:block;background-color:red;color:white;font-size:32px;text-decoration:none" id="pitchButton" href="javascript:startShakeChk(this)" onclick="startShakeChk(this)">Pepper Pitch!</a>
+<div id="result" style="line-height:80px;background-color:green;font-size:32px;font-wight:bold;color:white;position:absolute;bottom:0;top:0;right:0;width:300px;left:0;margin:auto;height:80px;border:5px solid brown;display:none">aa</div>
 </body>
 </html>
