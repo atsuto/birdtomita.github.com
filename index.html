@@ -20,8 +20,8 @@
 	var status = document.getElementById("status");
 	var result = document.getElementById("result");
 
-	function startShakeChk(btn){
-		btn.style.display="none";
+	function startShakeChk(){
+		document.getElementById("pitchButton").style.display="none";
 		myShakeEvent.start();
 		document.getElementById("result").style.display="none";
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
@@ -44,7 +44,7 @@
 				document.getElementById("result").innerHTML=res[rnd];
 				window.setTimeout(function(){
 					document.getElementById("status").innerHTML="Are You Ready?";
-					btn.style.display="block";
+					document.getElementById("pitchButton").style.display="block";
 				},2000);
 			}, false);
 		},5000);
@@ -55,7 +55,7 @@
 <body background="00361.JPG" style="text-align:center">
 	<img src="images-2.jpeg">
 <div id="status" style="font-size:32px;">Are You Ready?</div>
-<a style="display:block;background-color:red;color:white;font-size:32px;text-decoration:none" id="pitchButton" href="javascript:startShakeChk(this)" onclick="startShakeChk(this)">Pepper Pitch!</a>
+<a style="display:block;background-color:red;color:white;font-size:32px;text-decoration:none" id="pitchButton" href="javascript:startShakeChk(this)" onclick="startShakeChk()">Pepper Pitch!</a>
 <div id="result" style="line-height:80px;background-color:green;font-size:32px;font-wight:bold;color:white;position:absolute;bottom:0;top:0;right:0;width:300px;left:0;margin:auto;height:80px;border:5px solid brown;display:none">aa</div>
 </body>
 </html>
