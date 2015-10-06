@@ -2,7 +2,7 @@
 <html>
 <head lang="ja">
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 	<meta http-equiv="content-language" content="ja">
 	<title>Pepper Pitcher Controler</title>
 	<script type="text/javascript" src="js/shake.js"></script>
@@ -47,8 +47,9 @@
 
 	</script>
 </head>
-<body>
-<div id="status">Are You Ready? Push Button!</div>
-<input id="pitchButton" type="button" value="Pepper Pitch!" onclick="startShakeChk(this)">
+<body background="00361.JPG" style="text-align:center">
+	<img src="images-2.jpeg">
+<div id="status" style="font-size:32px;">Are You Ready? Push Button!</div>
+<a style="display:block;background-color:red;color:white;font-size:32px;" id="pitchButton" href="javascript:startShakeChk(this)" onclick="startShakeChk(this)">Pepper Pitch!</a>
 </body>
 </html>
