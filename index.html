@@ -17,11 +17,12 @@
 		btn.disabled=true;
 		myShakeEvent.start();
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
+		var audio = new Audio("spo_ge_mbat01.mp3");
+		audio.load();
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
 
 			window.addEventListener('shake', function(){
-				var audio = new Audio("spo_ge_mbat01.mp3");
 				audio.play();
 				window.removeEventListener('shake', this, false);
 				myShakeEvent.stop();
