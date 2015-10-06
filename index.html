@@ -17,21 +17,22 @@
 		btn.disabled=true;
 		myShakeEvent.start();
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
-		var audio1 = new Audio("spo_ge_mbat01.mp3");
-		audio1.load();
-		var audio2 = new Audio("spo_ge_mbat02.mp3");
-		audio2.load();
-		var audio3 = new Audio("spo_ge_mbat03.mp3");
-		audio3.load();
+		var audio[0] = new Audio("spo_ge_mbat01.mp3");
+		audio[0].load();
+		var audio[1] = new Audio("spo_ge_mbat02.mp3");
+		audio[1].load();
+		var audio[2] = new Audio("spo_ge_mbat03.mp3");
+		audio[2].load();
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
 
 			window.addEventListener('shake', function(){
-				audio2.play();
+				var rnd;
+				rnd = Math.floor( Math.random() * 3 );
+				audio[rnd].play();
 				window.removeEventListener('shake', this, false);
 				myShakeEvent.stop();
 				btn.disabled=false;
-				//shakeEventDidOccur(btn);
 			}, false);
 		},5000);
 	}
@@ -39,10 +40,6 @@
 	</script>
 </head>
 <body>
-	<!--
-<div id="arrow"><img src="images/arrow.png" width="118" alt="" /></div>
-<div id="debug"></div>
--->
 <div id="status">Are You Ready? Push Button!</div>
 <input id="pitchButton" type="button" value="Pepper Pitch!" onclick="startShakeChk(this)">
 </body>
