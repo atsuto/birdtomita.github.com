@@ -12,16 +12,17 @@
 		threshold: 15, // optional shake strength threshold
 		timeout: 1000 // optional, determines the frequency of event generation
 	});
+	var audio;
+	audio[0] = new Audio("spo_ge_mbat01.mp3");
+	audio[1] = new Audio("spo_ge_mbat02.mp3");
+	audio[2] = new Audio("spo_ge_mbat03.mp3");
 
 	function startShakeChk(btn){
 		btn.disabled=true;
 		myShakeEvent.start();
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
-		var audio[0] = new Audio("spo_ge_mbat01.mp3");
 		audio[0].load();
-		var audio[1] = new Audio("spo_ge_mbat02.mp3");
 		audio[1].load();
-		var audio[2] = new Audio("spo_ge_mbat03.mp3");
 		audio[2].load();
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
