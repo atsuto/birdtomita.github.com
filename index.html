@@ -13,19 +13,27 @@
 		timeout: 1000 // optional, determines the frequency of event generation
 	});
 
-	var shakeEventDidOccur = function(){
+	function shakeEventDidOccur(btn){
 
 			//put your own code here etc.
-			alert('shake!');
 			sound();
 			window.removeEventListener('shake', shakeEventDidOccur, false);
 			myShakeEvent.stop();
+			btn.disabled=false;
 	};
 
-	var startShakeChk = function(){
+	function startShakeChk(btn){
+		btn.disabled=true;
 		myShakeEvent.start();
-		window.addEventListener('shake', shakeEventDidOccur, false);
-	};
+		document.getElementById("status").innerHTML="The pitcher wound up and...";
+		window.addEventListener('shake', function(){
+			shakeEventDidOccur(btn);
+		}, false);
+		window.setTimeout(function(){
+			document.getElementById("status").innerHTML="and threw the pitch";
+			shakeEventDidOccur(btn);
+		},5000);
+	}
 
 	var sound = function(){
 		// 対象となるID名
@@ -48,7 +56,8 @@
 <div id="arrow"><img src="images/arrow.png" width="118" alt="" /></div>
 <div id="debug"></div>
 -->
-<input type="button" value="Pepper Pitch!" onclick="startShakeChk()">
+<div id="status">Are You Ready?</div>
+<input id="pitchButton" type="button" value="Pepper Pitch!" onclick="startShakeChk(this)">
 <audio id="sound-file" preload="auto">
 	<source src="./spo_ge_mbat01.mp3" type="audio/mp3">
 </audio>
