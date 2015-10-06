@@ -13,25 +13,29 @@
 		timeout: 1000 // optional, determines the frequency of event generation
 	});
 
-	function shakeEventDidOccur(btn){
-
-			//put your own code here etc.
-			sound();
-			window.removeEventListener('shake', shakeEventDidOccur, false);
-			myShakeEvent.stop();
-			btn.disabled=false;
-	};
-
 	function startShakeChk(btn){
 		btn.disabled=true;
 		myShakeEvent.start();
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
-		window.addEventListener('shake', function(){
-			shakeEventDidOccur(btn);
-		}, false);
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
-			shakeEventDidOccur(btn);
+
+			window.addEventListener('shake', function(){
+				var audio = new Audio("spo_ge_mbat01.mp3");
+				audio.play();
+				window.removeEventListener('shake', shakeEventDidOccur, false);
+				myShakeEvent.stop();
+				btn.disabled=false;
+				//shakeEventDidOccur(btn);
+			}, false);
+
+/*
+			var audio = new Audio("spo_ge_mbat01.mp3");
+			audio.play();
+			window.removeEventListener('shake', shakeEventDidOccur, false);
+			myShakeEvent.stop();
+			btn.disabled=false;
+*/
 		},5000);
 	}
 
