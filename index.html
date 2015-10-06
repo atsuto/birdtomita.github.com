@@ -12,10 +12,11 @@
 		threshold: 15, // optional shake strength threshold
 		timeout: 1000 // optional, determines the frequency of event generation
 	});
-	var audio = Array(3);
+	var audio = Array(4);
 	audio[0] = new Audio("spo_ge_mbat01.mp3");
 	audio[1] = new Audio("spo_ge_mbat02.mp3");
 	audio[2] = new Audio("spo_ge_mbat03.mp3");
+	audio[3] = new Audio("spo_ge_mbat_bant01.mp3");
 
 	function startShakeChk(btn){
 		btn.disabled=true;
@@ -24,16 +25,22 @@
 		audio[0].load();
 		audio[1].load();
 		audio[2].load();
+		audio[3].load();
+		var res = new Array("ホオオム　ラーーン","ヒット","ツーベース","アウト");
 		window.setTimeout(function(){
 			document.getElementById("status").innerHTML="and threw the pitch";
 
 			window.addEventListener('shake', function(){
 				var rnd;
-				rnd = Math.floor( Math.random() * 3 );
+				rnd = Math.floor( Math.random() * 4 );
 				audio[rnd].play();
 				window.removeEventListener('shake', this, false);
 				myShakeEvent.stop();
-				btn.disabled=false;
+				document.getElementById("status").innerHTML=res[rnd];
+				window.setTimeout(function(){
+					document.getElementById("status").innerHTML="Are You Ready? Push Button!";
+					btn.disabled=false;
+				},2000);
 			}, false);
 		},5000);
 	}
