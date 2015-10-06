@@ -21,7 +21,7 @@
 	var result = document.getElementById("result");
 
 	function startShakeChk(btn){
-		btn.disabled=true;
+		btn.style.display="none";
 		myShakeEvent.start();
 		document.getElementById("result").style.display="none";
 		document.getElementById("status").innerHTML="The pitcher wound up and...";
@@ -44,7 +44,7 @@
 				document.getElementById("result").innerHTML=res[rnd];
 				window.setTimeout(function(){
 					document.getElementById("status").innerHTML="Are You Ready?";
-					btn.disabled=false;
+					btn.style.display="block";
 				},2000);
 			}, false);
 		},5000);
