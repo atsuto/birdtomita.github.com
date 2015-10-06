@@ -28,30 +28,8 @@
 				btn.disabled=false;
 				//shakeEventDidOccur(btn);
 			}, false);
-
-/*
-			var audio = new Audio("spo_ge_mbat01.mp3");
-			audio.play();
-			window.removeEventListener('shake', shakeEventDidOccur, false);
-			myShakeEvent.stop();
-			btn.disabled=false;
-*/
 		},5000);
 	}
-
-	var sound = function(){
-		// 対象となるID名
-		var id = 'sound-file' ;
-
-		// 初回以外だったら音声ファイルを巻き戻す
-		if( typeof( document.getElementById( id ).currentTime ) != 'undefined' )
-		{
-			document.getElementById( id ).currentTime = 0;
-		}
-
-		// [ID:sound-file]の音声ファイルを再生[play()]する
-		document.getElementById( id ).play() ;
-	};
 
 	</script>
 </head>
@@ -62,8 +40,5 @@
 -->
 <div id="status">Are You Ready?</div>
 <input id="pitchButton" type="button" value="Pepper Pitch!" onclick="startShakeChk(this)">
-<audio id="sound-file" preload="auto">
-	<source src="./spo_ge_mbat01.mp3" type="audio/mp3">
-</audio>
 </body>
 </html>
