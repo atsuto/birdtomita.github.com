@@ -15,13 +15,17 @@
 -->
 <script type="text/javascript" src="js/shake.js">
 <script type="text/javascript">
-var myShakeEvent = new Shake({
-	threshold: 15, // optional shake strength threshold
-	timeout: 1000 // optional, determines the frequency of event generation
-});
 var start = function(){
+	alert("start");
+	var myShakeEvent = new Shake({
+		threshold: 15, // optional shake strength threshold
+		timeout: 1000 // optional, determines the frequency of event generation
+	});
+	alert("init shake");
 	myShakeEvent.start();
+	alert("shake event start");
 	window.addEventListener('shake', shakeEventDidOccur, false);
+	alert("shake event listen add");
 
 	//function to call when shake occurs
 	function shakeEventDidOccur () {
@@ -39,6 +43,6 @@ var start = function(){
 <div id="arrow"><img src="images/arrow.png" width="118" alt="" /></div>
 <div id="debug"></div>
 -->
-<input type="button" value="e" onclick="javascript:start()">
+<input type="button" value="start shake" onclick="javascript:start()">
 </body>
 </html>
