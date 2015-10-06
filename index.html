@@ -5,40 +5,52 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta http-equiv="content-language" content="ja">
 	<title>Pepper Pitcher Controler</title>
-	<!--
-	<link rel="stylesheet" href="css/common.css" />
-	<link rel="stylesheet" href="css/normalize.css" />
-	<link rel="stylesheet" href="css/index.css" />
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/jquery.transit.min.js"></script>
-	<script src="js/index.js"></script>
--->
-<script type="text/javascript" src="js/shake.js"></script>
-<script type="text/javascript">
-var startShakeChk = function(){
+	<script type="text/javascript" src="js/shake.js"></script>
+	<script type="text/javascript">
+
 	var myShakeEvent = new Shake({
 		threshold: 15, // optional shake strength threshold
 		timeout: 1000 // optional, determines the frequency of event generation
 	});
-	myShakeEvent.start();
-	window.addEventListener('shake', shakeEventDidOccur, false);
 
-	//function to call when shake occurs
-	function shakeEventDidOccur () {
+	var shakeEventDidOccur = function(){
 
-	    //put your own code here etc.
-	    alert('shake!');
+			//put your own code here etc.
+			alert('shake!');
+			sound();
 			window.removeEventListener('shake', shakeEventDidOccur, false);
 			myShakeEvent.stop();
-	}
-};
-</script>
+	};
+
+	var startShakeChk = function(){
+		myShakeEvent.start();
+		window.addEventListener('shake', shakeEventDidOccur, false);
+	};
+
+	var sound = function(){
+		// 対象となるID名
+		var id = 'sound-file' ;
+
+		// 初回以外だったら音声ファイルを巻き戻す
+		if( typeof( document.getElementById( id ).currentTime ) != 'undefined' )
+		{
+			document.getElementById( id ).currentTime = 0;
+		}
+
+		// [ID:sound-file]の音声ファイルを再生[play()]する
+		document.getElementById( id ).play() ;
+	};
+
+	</script>
 </head>
 <body>
 	<!--
 <div id="arrow"><img src="images/arrow.png" width="118" alt="" /></div>
 <div id="debug"></div>
 -->
-<input type="button" value="start shake" onclick="startShakeChk()">
+<input type="button" value="Pepper Pitch!" onclick="startShakeChk()">
+<audio id="sound-file" preload="auto">
+	<source src="./spo_ge_mbat01.mp3" type="audio/mp3">
+</audio>
 </body>
 </html>
