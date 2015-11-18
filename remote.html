@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="ja">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="content-language" content="ja">
+	<title>Pepper Pitcher Controler</title>
+  <script src="./libs/qimessaging/1.0/qimessaging.js"></script>
+	<script type="text/javascript" src="js/shake.js"></script>
+	<script type="text/javascript">
+
+    var self = this;
+		var status = "start";
+    var setupIns_ = function(){
+			self.qims.service("ALMemory").done(function(ins){
+				self.alMemory = ins;
+			// メモリ監視
+				qimessagingMemorySubscribe();
+				document.getElementById("pitchButton").style.display="block";
+				self.alMemory.raiseEvent("pepper_pitch/readyqr",Date.now());
+			});
+			self.qims.service("ALMotion").done(function(ins){
+				self.alMotion = ins;
+			});
+    };
+    //  self.qims = new QiSession("192.168.3.84");
+    self.qims = new QiSession();
+
+    self.qims.socket()
+    // 接続成功したら
+      .on('connect', function ()
+      {
+						 //\RSPD=110\\VCT=130\
+          // 接続成功したら各種セットアップを行う
+          setupIns_();
+      })
+    // 接続失敗したら
+      .on('disconnect', function () {
+            //self.nowState("切断");
+            console.log("失敗");
+      });
+
+	var myShakeEvent = new Shake({
+		threshold: 15, // optional shake strength threshold
+		timeout: 1000 // optional, determines the frequency of event generation
+	});
+	var audio = Array(4);
+	audio[0] = new Audio("spo_ge_mbat01.mp3");
+	audio[1] = new Audio("spo_ge_mbat02.mp3");
+	audio[2] = new Audio("spo_ge_mbat03.mp3");
+//	audio[3] = new Audio("spo_ge_mbat_bant01.mp3");
+//	var res = new Array("ホオオム　ラーーン","ヒット","ツーベース","アウト");
+
+	function startShakeChk(){
+//		if (status == "ready") {
+status="pitch";
+	    self.alMemory.raiseEvent("pepper_pitch/start","now");
+			document.getElementById("pitchButton").style.display="none";
+//			document.getElementById("result").style.display="none";
+//			document.getElementById("status").innerHTML="The pitcher wound up and...";
+//			audio[3].load();
+//		}
+audio[0].load();
+audio[1].load();
+audio[2].load();
+	}
+
+	function qimessagingMemorySubscribe(){
+		self.alMemory.subscriber("pepper_pitch/start").done(function(subscriber){
+			subscriber.signal.connect(pitchHandler);
+	  });
+	}
+
+	function pitchHandler(value) {
+		status = "wait";
+		myShakeEvent.start();
+			window.addEventListener('shake', function(){
+			if (status == "wait") {
+					status = "swing";
+					var rnd = Math.floor( Math.random() * 3 );
+					audio[rnd].play();
+					var dist = myShakeEvent.maxxyz + (myShakeEvent.maxspeed *  myShakeEvent.maxspeed);
+					self.alMemory.raiseEvent("pepper_pitch/result",dist);
+					window.removeEventListener('shake', this, false);
+					myShakeEvent.stop();
+				}
+			}, false);
+		}
+/*
+		function swing(){
+			if (status == "wait") {
+					status = "swing";
+					document.getElementById("status").innerHTML = status;
+					var rnd = Math.floor( Math.random() * 3 );
+					audio[rnd].play();
+					self.alMemory.raiseEvent("pepper_pitch/result",rnd);
+				}
+		}
+*/
+function right(){
+	self.alMotion.moveTo(0, 0, 0.5).fail(function(err){
+		console.log(err);
+	});
+}
+function left(){
+	self.alMotion.moveTo(0, 0, -0.5).fail(function(err){
+		console.log(err);
+	});
+}
+
+  </script>
+</head>
+<body background="00361.JPG" style="text-align:center">
+	<div>
+		<a style="font-size:64px" href="javascript:left()" onclick="left()">←</a>
+		<a style="font-size:64px" href="javascript:right()" onclick="right()">→</a>
+	</div>
+	<!--
+	<div>
+		<a style="font-size:64px" href="javascript:swing()" onclick="swing()">swing</a>
+	</div>
+-->
+	<img src="images-2.jpeg">
+<a style="position:absolute;bottom:0;top:0;right:0;width:300px;left:0;margin:auto;height:80px;line-height:80px;display:block;background-color:red;color:white;font-size:32px;text-decoration:none;display:none" id="pitchButton" href="javascript:startShakeChk()" onclick="startShakeChk()">Pepper Pitch!</a>
+<!--<div id="result" style="line-height:80px;background-color:green;font-size:32px;font-wight:bold;color:white;position:absolute;bottom:0;top:0;right:0;width:300px;left:0;margin:auto;height:80px;border:5px solid brown;display:none">aa</div>-->
+</body>
+</html>

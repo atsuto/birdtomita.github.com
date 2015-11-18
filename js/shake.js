@@ -42,6 +42,11 @@
         this.lastX = null;
         this.lastY = null;
         this.lastZ = null;
+        this.maxxyz = 0;
+        this.lastxyz = 0;
+        this.maxspeed = 0;
+        this.speed = 0;
+        this.last = new Date().getTime();
 
         //create custom event
         if (typeof document.CustomEvent === 'function') {
@@ -68,6 +73,11 @@
     //start listening for devicemotion
     Shake.prototype.start = function () {
         this.reset();
+        this.maxxyz = 0;
+        this.lastxyz = 0;
+        this.maxspeed = 0;
+        this.speed = 0;
+        this.last = new Date().getTime();
         if (this.hasDeviceMotion) {
             window.addEventListener('devicemotion', this, false);
         }
@@ -80,6 +90,14 @@
         }
         this.reset();
     };
+/*
+    Shake.prototype.speed = function () {
+      return this.maxspeed;
+    };
+    Shake.prototype.aspeed = function () {
+      return this.maxxyz;
+    };
+*/
 
     //calculates if shake did occur
     Shake.prototype.devicemotion = function (e) {
@@ -89,6 +107,20 @@
         var deltaX = 0;
         var deltaY = 0;
         var deltaZ = 0;
+        var x = e.acceleration.x;
+        var y = e.acceleration.y;
+        var z = e.acceleration.z;
+        var now = new Date().getTime();
+        var xyz = Math.sqrt( x*x + y*y + z*z );
+        this.speed += (xyz - this.lastxyz) * (now-this.last) /1000;
+        if (xyz > this.maxxyz){
+          this.maxxyz = xyz;
+        }
+        if (this.speed > this.maxspeed) {
+          this.maxspeed = this.speed;
+        }
+        this.last = now;
+        this.lastxyz = xyz;
 
         if ((this.lastX === null) && (this.lastY === null) && (this.lastZ === null)) {
             this.lastX = current.x;
